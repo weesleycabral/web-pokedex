@@ -1,1 +1,40 @@
-<p *ngFor="let pok of pokemon">{{ pok.name }}</p>
+<header class="header">
+    <span class="titulo">Pokedéx</span>
+</header>
+<hr>
+
+<body>
+    <div class="wrap">
+        <div class="search">
+            <input type="text" class="searchTerm" placeholder="Nome do Pokemón...."
+                (change)="filterPokemonList($event)">
+            <button (click)="filterPokemonList($event)" type="submit" class="searchButton">
+                <i class="ph ph-magnifying-glass"></i>
+            </button>
+        </div>
+    </div>
+</body>
+<div class="drag">
+    <span>
+        Ou selecione uma geração
+    </span>
+</div>
+<div class="container">
+    <div class="dropdown">
+        <button class="dropbtn">Selecionar Geração</button>
+        <div class="dropdown-content">
+            <a (click)="selectGeneration(1)" href="#">Geração 1</a>
+            <a (click)="selectGeneration(2)" href="#">Geração 2</a>
+            <a (click)="selectGeneration(3)" href="#">Geração 3</a>
+            <a (click)="selectGeneration(4)" href="#">Geração 4</a>
+            <a (click)="selectGeneration(5)" href="#">Geração 5</a>
+            <a (click)="selectGeneration(6)" href="#">Geração 6</a>
+            <a (click)="selectGeneration(7)" href="#">Geração 7</a>
+            <a (click)="selectGeneration(8)" href="#">Geração 8</a>
+        </div>
+    </div>
+</div>
+
+<div *ngFor="let poke of filteredPokemonList.length > 0 ? filteredPokemonList : pokemonList;">
+    <span>{{ poke.name }}</span>
+</div>

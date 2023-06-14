@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModelPokedex } from 'src/app/models/pokedex.model';
 import { PokeapiService } from 'src/app/services/pokeapi.service';
 
 @Component({
@@ -7,18 +8,31 @@ import { PokeapiService } from 'src/app/services/pokeapi.service';
   styleUrls: ['./pokedex.component.scss'],
 })
 export class PokedexComponent implements OnInit {
-  pokemon: any
-  constructor(private pokeapiService: PokeapiService) {}
+  public pokemonList: ModelPokedex[] = [];
+  public filteredPokemonList: ModelPokedex[] = [];
+
+  constructor(private pokeapiService: PokeapiService) { }
 
   ngOnInit(): void {
-      this.getAllPokemon();
+    // this.getAllPokemon();
   }
 
-  getAllPokemon() {
-    this.pokeapiService.getAllPokemon(3).subscribe((res) => {
-      console.log(res);
-      this.pokemon = res.pokemon_species;
-      console.log(this.pokemon);
+  getAllPokemon(id: number) {
+    this.pokeapiService.getAllPokemon(id).subscribe((res) => {
+      this.pokemonList = res.pokemon_species;
+      console.log(this.pokemonList);
     });
+  }
+
+  selectGeneration(id: number) {
+    this.getAllPokemon(id);
+  }
+
+  filterPokemonList(filter: any): void {
+    const data = String(filter.detail.value);
+    const upperFilter = data.toUpperCase();
+    this.filteredPokemonList = this.pokemonList.filter((attr) =>
+      attr.name.toUpperCase().includes(upperFilter)
+    );
   }
 }

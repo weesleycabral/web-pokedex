@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { PokedexComponent } from './pages/pokedex/pokedex.component'
+import { PokedexComponent } from './pages/pokedex/pokedex.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -13,7 +13,7 @@ import { PokedexComponent } from './pages/pokedex/pokedex.component'
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
