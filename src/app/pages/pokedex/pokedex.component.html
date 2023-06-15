@@ -6,11 +6,12 @@
 <body>
     <div class="wrap">
         <div class="search">
-            <input type="text" class="searchTerm" placeholder="Nome do Pokemón...."
-                (input)="filterPokemonList($event)" #searchValue>
-            <button (click)="filterPokemonList(searchValue.value)" type="submit" class="searchButton">
+            <input type="text" class="form-control" placeholder="Nome do Pokemón...." [(ngModel)]="filtroPokemon">
+            <div id="datatable">
+            </div>
+            <!-- <button (click)="filtrarPokemon(filtroPokemon)" type="submit" class="searchButton">
                 <i class="ph ph-magnifying-glass"></i>
-            </button>
+            </button> -->
         </div>
     </div>
 </body>
@@ -21,20 +22,33 @@
 </div>
 <div class="container">
     <div class="dropdown">
-        <button class="dropbtn">Selecionar Geração</button>
+        <button class="dropbtn" *ngIf="!geracao">Selecionar Geração</button>
+        <button class="dropbtn" *ngIf="geracao">{{ geracao }}</button>
         <div class="dropdown-content">
-            <a (click)="selectGeneration(1)" href="#">Geração 1</a>
-            <a (click)="selectGeneration(2)" href="#">Geração 2</a>
-            <a (click)="selectGeneration(3)" href="#">Geração 3</a>
-            <a (click)="selectGeneration(4)" href="#">Geração 4</a>
-            <a (click)="selectGeneration(5)" href="#">Geração 5</a>
-            <a (click)="selectGeneration(6)" href="#">Geração 6</a>
-            <a (click)="selectGeneration(7)" href="#">Geração 7</a>
-            <a (click)="selectGeneration(8)" href="#">Geração 8</a>
+            <a (click)="selectGeneration(i + 1)" *ngFor=" let ger of geracoes; let i = index;" href="#">{{ ger }}</a>
         </div>
     </div>
 </div>
 
-<div *ngFor="let poke of filteredPokemonList.length > 0 ? filteredPokemonList : pokemonList;">
-    <span>{{ poke.name }}</span>
+<!-- <div *ngIf="pokemonList">
+    <div *ngFor="let poke of filteredPokemonList.length > 0 ? filteredPokemonList : pokemonList;">
+        <div *ngIf="filteredPokemonList">
+            <span>{{ poke.name }}</span>
+        </div>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col-4" *ngFor="let poke of filteredPokemonList.length > 0 ? filteredPokemonList : pokemonList;">
+        <div>
+            <div>{{poke.name}}</div>
+        </div>
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{poke.id}}.png" alt=""
+            width="25%" />
+    </div>
+
 </div>
+
+<!-- <div *ngIf="filteredPokemonList.length === 0 && pokemonList.length !== 0">
+    <span>nada fi</span>
+</div> -->
