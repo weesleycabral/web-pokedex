@@ -29,7 +29,9 @@ export class PokedexComponent implements OnInit {
   }
 
   filterPokemonList(filter: any): void {
-    const data = String(filter.detail.value);
+    console.log(filter);
+
+    const data = String(filter.target.value);
     const upperFilter = data.toUpperCase();
     this.filteredPokemonList = this.pokemonList.filter((attr) =>
       attr.name.toUpperCase().includes(upperFilter)
