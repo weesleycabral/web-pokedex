@@ -11,6 +11,12 @@ export class PokeapiService extends BaseService {
     super();
   }
 
+  public getAllGenPokemon(): Observable<any> {
+    return this.http.get(`${this.Basepath()}pokemon?limit=900&offset=0`, {
+      headers: this.Headers(),
+    });
+  }
+
   public getAllPokemon(gen: number): Observable<any> {
     return this.http.get(`${this.Basepath()}generation/${gen}`, {
       headers: this.Headers(),

@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PokedexComponent } from './pages/pokedex/pokedex.component';
 import { FormsModule } from '@angular/forms';
+import { NgxLoadingModule } from 'ngx-loading';
 @NgModule({
   declarations: [
     AppComponent,
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    NgxLoadingModule.forRoot({}),
     FormsModule
   ],
   providers: [],

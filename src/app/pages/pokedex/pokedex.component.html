@@ -5,10 +5,8 @@
 
 <body>
     <div class="wrap">
-        <div class="search">
+        <div class="search mt-3">
             <input type="text" class="form-control" placeholder="Nome do Pokemón...." [(ngModel)]="filtroPokemon">
-            <div id="datatable">
-            </div>
             <!-- <button (click)="filtrarPokemon(filtroPokemon)" type="submit" class="searchButton">
                 <i class="ph ph-magnifying-glass"></i>
             </button> -->
@@ -20,15 +18,13 @@
         Ou selecione uma geração
     </span>
 </div>
-<div class="container">
     <div class="dropdown">
-        <button class="dropbtn" *ngIf="!geracao">Selecionar Geração</button>
+        <button class="dropbtn mt-3" *ngIf="!geracao">{{currentSelectedGeneration === 0 ? 'Selecionar Geração' : currentSelectedGeneration + '° geração'}}</button>
         <button class="dropbtn" *ngIf="geracao">{{ geracao }}</button>
         <div class="dropdown-content">
             <a (click)="selectGeneration(i + 1)" *ngFor=" let ger of geracoes; let i = index;" href="#">{{ ger }}</a>
         </div>
     </div>
-</div>
 
 <!-- <div *ngIf="pokemonList">
     <div *ngFor="let poke of filteredPokemonList.length > 0 ? filteredPokemonList : pokemonList;">
@@ -38,17 +34,29 @@
     </div>
 </div> -->
 
-<div class="row">
-    <div class="col-4" *ngFor="let poke of filteredPokemonList.length > 0 ? filteredPokemonList : pokemonList;">
-        <div>
-            <div>{{poke.name}}</div>
-        </div>
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{poke.id}}.png" alt=""
-            width="25%" />
-    </div>
+<div class="row" style="padding: 2em;" *ngIf="_filtroPokemon !== '' && filteredPokemonList.length || _filtroPokemon === '' && pokemonList.length">
+    <div class="col-md-3" *ngFor="let poke of filteredPokemonList.length > 0 ? filteredPokemonList : pokemonList;">
+        <div class="card text-center mt-3 text-dark">
 
+          <span class="text-primary" style="position: absolute; float: left; font-size: 1.2em; font-weight: bold; opacity: 0.5">#{{poke.id}}</span>
+          <span>{{poke.name | titlecase}}</span>
+
+          <img style="margin: auto;" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{poke.id}}.png" alt=""
+              width="25%" />
+        </div>
+
+    </div>
+</div>
+
+<div class="row" *ngIf="_filtroPokemon !== '' && !filteredPokemonList.length">
+     <span class="text-primary text-center mt-3" style="font-size: 1.5em;">nada encontrado dog</span>
 </div>
 
 <!-- <div *ngIf="filteredPokemonList.length === 0 && pokemonList.length !== 0">
     <span>nada fi</span>
 </div> -->
+
+<ngx-loading
+[show]="loading"
+[config]="{ backdropBorderRadius: '3px', primaryColour: '#00B4CC', secondaryColour: '#00B4CC', tertiaryColour: '#00B4CC', backdropBackgroundColour: 'rgba(255,255,255,0.3)' }"
+></ngx-loading>

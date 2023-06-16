@@ -10,24 +10,49 @@ import { PokeapiService } from 'src/app/services/pokeapi.service';
 export class PokedexComponent implements OnInit {
   public pokemonList: ModelPokedex[] = [];
   public filteredPokemonList: ModelPokedex[] = [];
-  _filtroPokemon: string;
+
+  public allPokemonList: ModelPokedex[] = [];
+
+  _filtroPokemon: string = '';
   public geracao: any
   public geracoes: string[] = ['Geração 1', 'Geração 2', 'Geração 3', 'Geração 4', 'Geração 5', 'Geração 6', 'Geração 7', 'Geração 8', 'Geração 9']
+
+  public currentSelectedGeneration = 0;
+
+  public loading = false;
 
   constructor(private pokeapiService: PokeapiService) { }
 
   ngOnInit(): void {
     this.filteredPokemonList = this.pokemonList;
-    console.log(this.filteredPokemonList.length);
-
-    // this.getAllPokemon();
+    this.getAllPokemon();
   }
 
-  public getAllPokemon(gen: number): void {
+  public getAllPokemon(): void {
+    let id = 1;
+
+    this.pokeapiService.getAllGenPokemon().subscribe((res) => {
+      res.results.forEach((resultIndex: any) => {
+        this.allPokemonList.push({
+          id,
+          name: resultIndex.name
+        })
+        id++
+      });
+
+      console.log(res)
+
+    })
+  }
+
+  public getPokemonByGeneration(gen: number): void {
     const generation = Number(gen)
+    this.currentSelectedGeneration = gen;
+    this.loading = true;
     // this.currentGeneration = generation;
     // localStorage.setItem('currentGen', String(this.currentGeneration));
     this.pokemonList = [];
+    this.filteredPokemonList = [];
 
     // this.showDetails = false;
     // this.generic.showLoading(true);
@@ -42,8 +67,9 @@ export class PokedexComponent implements OnInit {
             name: element.name,
           });
         });
-        console.log(this.pokemonList)
+
         this.pokemonList.sort((a, b) => Number(a.id) > Number(b.id) ? 1 : -1);
+        this.loading = false;
         // if (this.currentGeneration == 8) {
         //   const last = this.pokemonList.findIndex(x => x.id == 899)
         //   this.pokemonList.splice(last)
@@ -52,6 +78,7 @@ export class PokedexComponent implements OnInit {
       },
       (err) => {
         console.log('oi');
+        this.loading = false;
         // this.generic.showLoading(false);
         // this.generic.presentToast('Erro na conexão com o servidor.');
       }
@@ -74,7 +101,7 @@ export class PokedexComponent implements OnInit {
     }
     console.log(id);
 
-    this.getAllPokemon(id);
+    this.getPokemonByGeneration(id);
   }
 
   // filterPokemonList(filter: any): void {
@@ -98,7 +125,7 @@ export class PokedexComponent implements OnInit {
 
   filtrarPokemon(filtrarPor: string): ModelPokedex[] {
     filtrarPor = filtrarPor.toLowerCase();
-    return this.pokemonList.filter(res =>
+    return this.allPokemonList.filter(res =>
       res.name.toLowerCase().indexOf(filtrarPor) !== -1);
   }
 }
