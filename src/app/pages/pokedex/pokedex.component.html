@@ -1,5 +1,5 @@
 <header class="header">
-    <span class="titulo">Pokedéx</span>
+    <span class="titulo">Web Pokedéx</span>
 </header>
 <hr>
 
@@ -8,9 +8,6 @@
         <div class="search mt-3">
             <input type="text" class="form-control" placeholder="Pesquise por nome do Pokémon...."
                 [(ngModel)]="filtroPokemon">
-            <!-- <button (click)="filtrarPokemon(filtroPokemon)" type="submit" class="searchButton">
-                <i class="ph ph-magnifying-glass"></i>
-            </button> -->
         </div>
     </div>
 </div>
@@ -20,28 +17,20 @@
     </span>
 </div>
 <div class="dropdown">
-    <button class="dropbtn mt-3" *ngIf="!geracao">{{currentSelectedGeneration === 0 ? 'Selecionar
+    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false" *ngIf="!geracao">{{currentSelectedGeneration === 0 ? 'Selecionar
         Geração' :
-        currentSelectedGeneration + '° geração'}} <i *ngIf="currentSelectedGeneration === 0"
-            class="ph ph-caret-down"></i></button>
-    <button class="dropbtn" *ngIf="geracao">{{ geracao }}</button>
-    <div (click)="teste()" class="dropdown-content">
-        <a (click)="selectGeneration(i + 1)" *ngFor=" let ger of geracoes; let i = index;" href="#">{{ ger }}</a>
+        currentSelectedGeneration + '° Geração'}}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a *ngFor=" let ger of geracoes; let i = index" (click)="selectGeneration(i + 1)" class="dropdown-item"
+            href="#">{{ ger }}</a>
     </div>
 </div>
-
-<!-- <div *ngIf="pokemonList">
-    <div *ngFor="let poke of filteredPokemonList.length > 0 ? filteredPokemonList : pokemonList;">
-        <div *ngIf="filteredPokemonList">
-            <span>{{ poke.name }}</span>
-        </div>
-    </div>
-</div> -->
-
-<div data-toggle="modal" data-target="#exampleModal" class="row" style="padding: 2em;"
+<div class="row" style="padding: 2em;"
     *ngIf="_filtroPokemon !== '' && filteredPokemonList.length || _filtroPokemon === '' && pokemonList.length">
     <div class="col-md-3" *ngFor="let poke of filteredPokemonList.length > 0 ? filteredPokemonList : pokemonList;">
-        <div class="card text-center mt-3 text-dark">
+        <div data-bs-toggle="modal" data-bs-target="#exampleModal" class="card text-center mt-3 text-dark">
 
             <span class="text-primary"
                 style="position: absolute; float: left; font-size: 1.2em; font-weight: bold; opacity: 0.5">#{{poke.id}}</span>
@@ -69,23 +58,28 @@
     <span>nada fi</span>
 </div> -->
 
-<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<!-- Modal -->
+<div class="modal modal-xl fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header text-center">
+                <h5 class="modal-title w-100" id="exampleModalLabel">Modal title</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
             </div>
             <div class="modal-body">
                 ...
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    style="width: 100%!important;">Close</button>
             </div>
         </div>
     </div>
 </div>
+
 
 <ngx-loading [show]="loading"
     [config]="{ backdropBorderRadius: '3px', primaryColour: '#00B4CC', secondaryColour: '#00B4CC', tertiaryColour: '#00B4CC', backdropBackgroundColour: 'rgba(255,255,255,0.3)' }"></ngx-loading>

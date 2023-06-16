@@ -139,7 +139,8 @@ export class PokedexComponent implements OnInit {
       res.name.toLowerCase().indexOf(filtrarPor) !== -1);
   }
 
-  teste() {
+  cleanSearchValue() {
     this.filtroPokemon = '';
   }
+
 }

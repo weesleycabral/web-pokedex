@@ -1,16 +1,24 @@
+@font-face {
+    font-family: 'Pokemon';
+    src: url('/assets/fonts/pokemon-solid.ttf') format('truetype');
+}
+
+
 * {
     margin: 0;
 }
 
 .header {
-    background-color: #3F51B5;
+    font-family: 'Pokemon', sans-serif;
+    background-color: #CA0C29;
     display: flex;
     text-align: center;
     justify-content: center;
     padding: 0.1rem;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    color: #FFF;
+    color: #D9C721;
     font-weight: 800;
+    padding-bottom: 20px;
 }
 
 .titulo {
@@ -34,7 +42,7 @@
 
 .searchTerm {
     width: 100%;
-    border: 3px solid #00B4CC;
+    border: 3px solid #3F51B5;
     border-right: none;
     padding: 5px;
     height: 20px;
@@ -44,14 +52,14 @@
 }
 
 .searchTerm:focus {
-    color: #00B4CC;
+    color: #3F51B5;
 }
 
 .searchButton {
     width: 40px;
     height: 36px;
-    border: 1px solid #00B4CC;
-    background: #00B4CC;
+    border: 1px solid #3F51B5;
+    background: #3F51B5;
     text-align: center;
     color: #fff;
     border-radius: 0 5px 5px 0;
@@ -75,55 +83,26 @@
     padding-top: 10px;
 }
 
-/* Dropdown Button */
-.dropbtn {
-    background-color: #00B4CC;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    margin: auto;
-    min-width: 200px;
-}
-
-/* The container <div> - needed to position the dropdown content */
 .dropdown {
+    padding: 10px;
     display: flex;
     justify-content: center;
 }
 
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    margin-top: 4.5em;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
+.dropdown-item {
     color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
 }
 
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
-    background-color: #ddd;
+.btn {
+    width: 15%;
+    padding: 10px;
+    color: white;
+    background-color: #CA0C29;
+    border: 1px solid #CA0C29;
 }
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
-    background-color: #00B4CC;
+.btn:hover {
+    background-color: #8b091d;
 }
 
 .container {
@@ -154,6 +133,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.modal {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -150px;
+    margin-top: -150px;
 }
 
 .texto {
