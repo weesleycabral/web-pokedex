@@ -104,6 +104,7 @@ export class PokedexComponent implements OnInit {
 
   selectGeneration(id: number) {
     console.log(id);
+    this.cleanSearchValue();
     if (id == 0) {
       id + 1;
       console.log(id);

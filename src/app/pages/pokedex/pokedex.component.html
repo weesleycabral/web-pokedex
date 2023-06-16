@@ -22,7 +22,7 @@
         Geração' :
         currentSelectedGeneration + '° Geração'}}
     </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <div  class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a *ngFor=" let ger of geracoes; let i = index" (click)="selectGeneration(i + 1)" class="dropdown-item"
             href="#">{{ ger }}</a>
     </div>
