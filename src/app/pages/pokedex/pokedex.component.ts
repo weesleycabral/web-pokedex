@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AnimationItem } from 'lottie-web';
+import { AnimationOptions } from 'ngx-lottie';
 import { ModelPokedex } from 'src/app/models/pokedex.model';
 import { PokeapiService } from 'src/app/services/pokeapi.service';
+
 
 @Component({
   selector: 'app-pokedex',
@@ -21,12 +24,19 @@ export class PokedexComponent implements OnInit {
 
   public loading = false;
 
+  options: AnimationOptions = {
+    path: '/assets/animations/notfound.json',
+    loop: true,
+    autoplay: true,
+  }
+
   constructor(private pokeapiService: PokeapiService) { }
 
   ngOnInit(): void {
     this.filteredPokemonList = this.pokemonList;
     this.getAllPokemon();
   }
+
 
   public getAllPokemon(): void {
     let id = 1;
@@ -127,5 +137,9 @@ export class PokedexComponent implements OnInit {
     filtrarPor = filtrarPor.toLowerCase();
     return this.allPokemonList.filter(res =>
       res.name.toLowerCase().indexOf(filtrarPor) !== -1);
+  }
+
+  teste() {
+    this.filtroPokemon = '';
   }
 }

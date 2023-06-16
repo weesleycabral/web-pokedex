@@ -7,6 +7,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { PokedexComponent } from './pages/pokedex/pokedex.component';
 import { FormsModule } from '@angular/forms';
 import { NgxLoadingModule } from 'ngx-loading';
+import { LottieModule } from 'ngx-lottie';
+import player from 'lottie-web';
+
+export function playerFactory(): any {
+  return import('lottie-web');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +24,8 @@ import { NgxLoadingModule } from 'ngx-loading';
     HttpClientModule,
     AppRoutingModule,
     NgxLoadingModule.forRoot({}),
-    FormsModule
+    FormsModule,
+    LottieModule.forRoot({ player: playerFactory })
   ],
   providers: [],
   bootstrap: [AppComponent]
