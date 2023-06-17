@@ -4,7 +4,8 @@ import { AnimationOptions } from 'ngx-lottie';
 import { ModelPokedex } from 'src/app/models/pokedex.model';
 import { PokeapiService } from 'src/app/services/pokeapi.service';
 
-
+import { SwiperOptions } from 'swiper';
+import Swiper, { Navigation } from 'swiper';
 @Component({
   selector: 'app-pokedex',
   templateUrl: './pokedex.component.html',
@@ -16,9 +17,23 @@ export class PokedexComponent implements OnInit {
 
   public allPokemonList: ModelPokedex[] = [];
 
+  public pokeById: any[] = [];
+  public typesPokemon: any[] = [];
+  public imagesSpecies: any[] = [];
+
   _filtroPokemon: string = '';
-  public geracao: any
-  public geracoes: string[] = ['Geração 1', 'Geração 2', 'Geração 3', 'Geração 4', 'Geração 5', 'Geração 6', 'Geração 7', 'Geração 8', 'Geração 9']
+  public geracao: any;
+  public geracoes: string[] = [
+    'Geração 1',
+    'Geração 2',
+    'Geração 3',
+    'Geração 4',
+    'Geração 5',
+    'Geração 6',
+    'Geração 7',
+    'Geração 8',
+    'Geração 9',
+  ];
 
   public currentSelectedGeneration = 0;
 
@@ -28,15 +43,14 @@ export class PokedexComponent implements OnInit {
     path: '/assets/animations/notfound.json',
     loop: true,
     autoplay: true,
-  }
+  };
 
-  constructor(private pokeapiService: PokeapiService) { }
+  constructor(private pokeapiService: PokeapiService) {}
 
   ngOnInit(): void {
     this.filteredPokemonList = this.pokemonList;
     this.getAllPokemon();
   }
-
 
   public getAllPokemon(): void {
     let id = 1;
@@ -45,18 +59,17 @@ export class PokedexComponent implements OnInit {
       res.results.forEach((resultIndex: any) => {
         this.allPokemonList.push({
           id,
-          name: resultIndex.name
-        })
-        id++
+          name: resultIndex.name,
+        });
+        id++;
       });
 
-      console.log(res)
-
-    })
+      console.log(res);
+    });
   }
 
   public getPokemonByGeneration(gen: number): void {
-    const generation = Number(gen)
+    const generation = Number(gen);
     this.currentSelectedGeneration = gen;
     this.loading = true;
     // this.currentGeneration = generation;
@@ -68,9 +81,12 @@ export class PokedexComponent implements OnInit {
     // this.generic.showLoading(true);
     this.pokeapiService.getAllPokemon(generation).subscribe(
       (value) => {
-        console.log(value)
+        console.log(value);
         Object.values(value.pokemon_species).forEach((element: any) => {
-          const id = element.url.split('pokemon-species')[1].replaceAll('/', '').trim()
+          const id = element.url
+            .split('pokemon-species')[1]
+            .replaceAll('/', '')
+            .trim();
 
           this.pokemonList.push({
             id,
@@ -78,7 +94,7 @@ export class PokedexComponent implements OnInit {
           });
         });
 
-        this.pokemonList.sort((a, b) => Number(a.id) > Number(b.id) ? 1 : -1);
+        this.pokemonList.sort((a, b) => (Number(a.id) > Number(b.id) ? 1 : -1));
         this.loading = false;
         // if (this.currentGeneration == 8) {
         //   const last = this.pokemonList.findIndex(x => x.id == 899)
@@ -108,7 +124,6 @@ export class PokedexComponent implements OnInit {
     if (id == 0) {
       id + 1;
       console.log(id);
-
     }
     console.log(id);
 
@@ -131,17 +146,40 @@ export class PokedexComponent implements OnInit {
 
   set filtroPokemon(value: string) {
     this._filtroPokemon = value;
-    this.filteredPokemonList = this._filtroPokemon ? this.filtrarPokemon(this._filtroPokemon) : this.pokemonList;
+    this.filteredPokemonList = this._filtroPokemon
+      ? this.filtrarPokemon(this._filtroPokemon)
+      : this.pokemonList;
   }
 
   filtrarPokemon(filtrarPor: string): ModelPokedex[] {
     filtrarPor = filtrarPor.toLowerCase();
-    return this.allPokemonList.filter(res =>
-      res.name.toLowerCase().indexOf(filtrarPor) !== -1);
+    return this.allPokemonList.filter(
+      (res) => res.name.toLowerCase().indexOf(filtrarPor) !== -1
+    );
   }
 
   cleanSearchValue() {
     this.filtroPokemon = '';
   }
 
+  detailPokemon(pokeid: number) {
+    this.loading = true;
+    this.pokeById = [];
+    this.imagesSpecies = [];
+
+    Swiper.use([Navigation]);
+
+    this.pokeapiService.getPokemonDetails(pokeid).subscribe((value: any) => {
+      this.pokeById.push(value);
+      this.typesPokemon = value.types;
+
+      this.imagesSpecies.push(value.sprites.front_default);
+      this.imagesSpecies.push(value.sprites.back_default);
+
+      this.imagesSpecies.push(value.sprites.front_shiny);
+      this.imagesSpecies.push(value.sprites.back_shiny);
+
+      this.loading = false;
+    });
+  }
 }

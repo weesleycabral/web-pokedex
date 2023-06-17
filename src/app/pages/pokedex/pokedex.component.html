@@ -1,85 +1,151 @@
 <header class="header">
-    <span class="titulo">Web Pokedéx</span>
+  <span class="titulo">Web Pokedéx</span>
 </header>
-<hr>
+<hr />
 
 <div class="body">
-    <div class="wrap">
-        <div class="search mt-3">
-            <input type="text" class="form-control" placeholder="Pesquise por nome do Pokémon...."
-                [(ngModel)]="filtroPokemon">
-        </div>
+  <div class="wrap">
+    <div class="search mt-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Pesquise por nome do Pokémon...."
+        [(ngModel)]="filtroPokemon"
+      />
     </div>
+  </div>
 </div>
 <div class="drag">
-    <span>
-        Ou selecione uma geração
-    </span>
+  <span> Ou selecione uma geração </span>
 </div>
 <div class="dropdown">
-    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false" *ngIf="!geracao">{{currentSelectedGeneration === 0 ? 'Selecionar
-        Geração' :
-        currentSelectedGeneration + '° Geração'}}
-    </button>
-    <div  class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a *ngFor=" let ger of geracoes; let i = index" (click)="selectGeneration(i + 1)" class="dropdown-item"
-            href="#">{{ ger }}</a>
-    </div>
+  <button
+    class="btn btn-info dropdown-toggle"
+    type="button"
+    id="dropdownMenuButton"
+    data-bs-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+    *ngIf="!geracao"
+  >
+    {{
+      currentSelectedGeneration === 0
+        ? "Selecionar
+        Geração"
+        : currentSelectedGeneration + "° Geração"
+    }}
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a
+      *ngFor="let ger of geracoes; let i = index"
+      (click)="selectGeneration(i + 1)"
+      class="dropdown-item"
+      href="#"
+      >{{ ger }}</a
+    >
+  </div>
 </div>
-<div class="row" style="padding: 2em;"
-    *ngIf="_filtroPokemon !== '' && filteredPokemonList.length || _filtroPokemon === '' && pokemonList.length">
-    <div class="col-md-3" *ngFor="let poke of filteredPokemonList.length > 0 ? filteredPokemonList : pokemonList;">
-        <div data-bs-toggle="modal" data-bs-target="#exampleModal" class="card text-center mt-3 text-dark">
+<div
+  class="row"
+  style="padding: 2em"
+  *ngIf="
+    (_filtroPokemon !== '' && filteredPokemonList.length) ||
+    (_filtroPokemon === '' && pokemonList.length)
+  "
+>
+  <div
+    class="col-md-3"
+    *ngFor="
+      let poke of filteredPokemonList.length > 0
+        ? filteredPokemonList
+        : pokemonList
+    "
+  >
+    <div
+      (click)="detailPokemon(poke.id)"
+      data-bs-toggle="modal"
+      data-bs-target="#myModal"
+      class="card text-center mt-3 text-dark"
+    >
+      <span
+        class="text-primary"
+        style="
+          position: absolute;
+          float: left;
+          font-size: 1.2em;
+          font-weight: bold;
+          opacity: 0.5;
+        "
+        >#{{ poke.id }}</span
+      >
+      <span>{{ poke.name | titlecase }}</span>
 
-            <span class="text-primary"
-                style="position: absolute; float: left; font-size: 1.2em; font-weight: bold; opacity: 0.5">#{{poke.id}}</span>
-            <span>{{poke.name | titlecase}}</span>
-
-            <img style="margin: auto;"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{poke.id}}.png" alt=""
-                width="25%" />
-        </div>
-
+      <img
+        style="margin: auto"
+        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{
+          poke.id
+        }}.png"
+        alt=""
+        width="25%"
+      />
     </div>
+  </div>
 </div>
 <div *ngIf="_filtroPokemon !== '' && !filteredPokemonList.length">
-    <div class="texto">
-        Opa, não foi encontrado nenhum Pokemón com esse nome.
-
-    </div>
-    <div class="lottie">
-        <ng-lottie width="500px" [options]="options"></ng-lottie>
-    </div>
+  <div class="texto">Opa, não foi encontrado nenhum Pokemón com esse nome.</div>
+  <div class="lottie">
+    <ng-lottie width="500px" [options]="options"></ng-lottie>
+  </div>
 </div>
 
+<div
+  class="modal fade"
+  id="myModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" *ngFor="let pokemon of pokeById">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100">{{ pokemon.name | uppercase }}</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
 
-<!-- <div *ngIf="filteredPokemonList.length === 0 && pokemonList.length !== 0">
-    <span>nada fi</span>
-</div> -->
+      <div class="modal-body">
+          <swiper style="text-align: center;" [navigation]="true">
+            <ng-template swiperSlide *ngFor="let imagem of imagesSpecies">
+              <img [src]="imagem" style="width: 150px;"/>
+            </ng-template>
+          </swiper>
 
-<!-- Modal -->
-<div class="modal modal-xl fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <h5 class="modal-title w-100" id="exampleModalLabel">Modal title</h5>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button> -->
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                    style="width: 100%!important;">Close</button>
-            </div>
-        </div>
+        Tipo(s):
+        <span *ngFor="let tipos of typesPokemon"
+          >{{ tipos.type.name | titlecase }} <span></span>
+        </span>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
     </div>
+  </div>
 </div>
 
-
-<ngx-loading [show]="loading"
-    [config]="{ backdropBorderRadius: '3px', primaryColour: '#00B4CC', secondaryColour: '#00B4CC', tertiaryColour: '#00B4CC', backdropBackgroundColour: 'rgba(255,255,255,0.3)' }"></ngx-loading>
+<ngx-loading
+  [show]="loading"
+  [config]="{
+    backdropBorderRadius: '3px',
+    primaryColour: '#00B4CC',
+    secondaryColour: '#00B4CC',
+    tertiaryColour: '#00B4CC',
+    backdropBackgroundColour: 'rgba(255,255,255,0.3)'
+  }"
+></ngx-loading>

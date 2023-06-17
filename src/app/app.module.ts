@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { NgxLoadingModule } from 'ngx-loading';
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
+import { SwiperModule } from 'swiper/angular';
 
 export function playerFactory(): any {
   return import('lottie-web');
@@ -25,7 +26,8 @@ export function playerFactory(): any {
     AppRoutingModule,
     NgxLoadingModule.forRoot({}),
     FormsModule,
-    LottieModule.forRoot({ player: playerFactory })
+    LottieModule.forRoot({ player: playerFactory }),
+    SwiperModule
   ],
   providers: [],
   bootstrap: [AppComponent]
