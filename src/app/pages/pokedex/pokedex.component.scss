@@ -3,10 +3,6 @@
     src: url('/assets/fonts/pokemon-solid.ttf') format('truetype');
 }
 
-@import 'swiper/scss';
-@import 'swiper/scss/navigation';
-@import 'swiper/scss/pagination';
-
 .header {
     font-family: 'Pokemon', sans-serif;
     background-color: #FF0000;
@@ -14,7 +10,7 @@
     text-align: center;
     justify-content: center;
     padding: 0.1rem;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: 0 0 0.5em gray;
     color: #D9C721;
     font-weight: 800;
     padding-bottom: 20px;
@@ -141,9 +137,3 @@
     align-items: center;
     justify-content: center;
 }
-
-// .modal-title{
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// }
