@@ -5,12 +5,8 @@
 <div class="body">
   <div class="wrap">
     <div class="search mt-3">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Pesquise por nome do Pokémon...."
-        [(ngModel)]="filtroPokemon"
-      />
+      <input type="text" class="form-control" placeholder="Pesquise por nome do Pokémon...."
+        [(ngModel)]="filtroPokemon" />
     </div>
   </div>
 </div>
@@ -18,75 +14,44 @@
   <span> Ou selecione uma geração </span>
 </div>
 <div class="dropdown">
-  <button
-    class="btn btn-info dropdown-toggle"
-    type="button"
-    id="dropdownMenuButton"
-    data-bs-toggle="dropdown"
-    aria-haspopup="true"
-    aria-expanded="false"
-    *ngIf="!geracao"
-  >
+  <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false" *ngIf="!geracao">
     {{
-      currentSelectedGeneration === 0
-        ? "Selecionar
-        Geração"
-        : currentSelectedGeneration + "° Geração"
+    currentSelectedGeneration === 0
+    ? "Selecionar
+    Geração"
+    : currentSelectedGeneration + "° Geração"
     }}
+
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a
-      *ngFor="let ger of geracoes; let i = index"
-      (click)="selectGeneration(i + 1)"
-      class="dropdown-item"
-      href="#"
-      >{{ ger }}</a
-    >
+    <a *ngFor="let ger of geracoes; let i = index" (click)="selectGeneration(i + 1)" class="dropdown-item" href="#">{{
+      ger }}</a>
   </div>
 </div>
-<div
-  class="row"
-  style="padding: 2em"
-  *ngIf="
+<div class="row" style="padding: 2em" *ngIf="
     (_filtroPokemon !== '' && filteredPokemonList.length) ||
     (_filtroPokemon === '' && pokemonList.length)
-  "
->
-  <div
-    class="col-md-3"
-    *ngFor="
+  ">
+  <div class="col-md-3" *ngFor="
       let poke of filteredPokemonList.length > 0
         ? filteredPokemonList
         : pokemonList
-    "
-  >
-    <div
-      (click)="detailPokemon(poke.id)"
-      data-bs-toggle="modal"
-      data-bs-target="#myModal"
-      class="card text-center mt-3 text-dark"
-    >
-      <span
-        class="text-primary"
-        style="
+    ">
+    <div (click)="detailPokemon(poke.id)" data-bs-toggle="modal" data-bs-target="#myModal"
+      class="card text-center mt-3 text-dark">
+      <span class="text-primary" style="
           position: absolute;
           float: left;
           font-size: 1.2em;
           font-weight: bold;
           opacity: 0.5;
-        "
-        >#{{ poke.id }}</span
-      >
+        ">#{{ poke.id }}</span>
       <span>{{ poke.name | titlecase }}</span>
 
-      <img
-        style="margin: auto"
-        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{
+      <img style="margin: auto" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{
           poke.id
-        }}.png"
-        alt=""
-        width="25%"
-      />
+        }}.png" alt="" width="25%" />
     </div>
   </div>
 </div>
@@ -97,54 +62,40 @@
   </div>
 </div>
 
-<div
-  class="modal fade"
-  id="myModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="myModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content" *ngFor="let pokemon of pokeById">
       <div class="modal-header text-center">
         <h4 class="modal-title w-100">{{ pokemon.name | uppercase }}</h4>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <div class="modal-body">
-          <swiper style="text-align: center;" [navigation]="true">
-            <ng-template swiperSlide *ngFor="let imagem of imagesSpecies">
-              <img [src]="imagem" style="width: 150px;"/>
-            </ng-template>
-          </swiper>
+        <swiper style="text-align: center;" [navigation]="true">
+          <ng-template swiperSlide *ngFor="let imagem of imagesSpecies">
+            <img [src]="imagem" style="width: 150px;" />
+          </ng-template>
+        </swiper>
 
         Tipo(s):
-        <span *ngFor="let tipos of typesPokemon"
-          >{{ tipos.type.name | titlecase }} <span></span>
+        <span *ngFor="let tipos of typesPokemon; let last = last">{{ tipos.type.name | titlecase }}{{ !last ? ',' : ''
+          }} <span></span>
         </span>
       </div>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-          Close
+          Fechar
         </button>
       </div>
     </div>
   </div>
 </div>
 
-<ngx-loading
-  [show]="loading"
-  [config]="{
+<ngx-loading [show]="loading" [config]="{
     backdropBorderRadius: '3px',
     primaryColour: '#00B4CC',
     secondaryColour: '#00B4CC',
     tertiaryColour: '#00B4CC',
     backdropBackgroundColour: 'rgba(255,255,255,0.3)'
-  }"
-></ngx-loading>
+  }"></ngx-loading>
